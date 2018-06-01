@@ -1,5 +1,6 @@
+from IModel import IModel
 
-class AppModel():
-    def __init__(self):
-        return self
+class AppModel(IModel):
+    def __init__(self,app):
+        self.arg = app
     
