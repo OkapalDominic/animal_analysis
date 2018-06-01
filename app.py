@@ -7,7 +7,7 @@ from presenter import Presenter
 
 app = Flask(__name__)
 app.secret_key = "secret"
-model = AppModel(app)
+model = AppModel()
 presenter = Presenter(model)
 
 def create_template(route):
