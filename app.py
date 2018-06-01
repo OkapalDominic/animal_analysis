@@ -41,3 +41,14 @@ def render_view(view):
     """
     present_flash(view.get_flash())
     return create_template(view.get_route())
+
+
+# ~~~~~~~~~~ Routes ~~~~~~~~~~~~~~~~
+@app.route('/')
+def index():
+    return render_template(presenter.index())
+
+
+if __name__ = '__main__':
+    app.debug = True
+    app.run(host="0.0.0.0",port=8080)
