@@ -5,8 +5,8 @@ class Presenter:
         self.model = model
 
     def index(self):
-    """
-    Present index.html
+        """
+        Present index.html
 
-    """
+        """
         return 'index.html'
