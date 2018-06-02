@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for, request
 
 from model import AppModel
 from view_header import Route
@@ -47,6 +47,10 @@ def render_view(view):
 @app.route('/')
 def index():
     return render_template(presenter.index())
+
+@app.route('/analyze', methods=['GET','POST'])
+def analyze():
+    return render_view(presenter.analyze(request))
 
 
 if __name__ == '__main__':

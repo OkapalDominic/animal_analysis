@@ -2,5 +2,15 @@
 {% block body %}
 	<div class="jumbotron text-center">
 		<h1>Welcome</h1>
-		<p class="lead">Animal Analysisizer.</p>
+		<form action="analyze" method="POST" enctype="multipart/form-data">
+			Upload Photo: <input type="file" name="file">
+			Describe it: <input type="text" name="description">
+			<br>
+			<input type="submit" name="submit" value="Submit">
+		</form>
+		{% for image_entity in image_entities %}
+			<img src="{{image_data['image_url']}}" width="200" height="200">
+			<p>You seem to {{image_data['feelings']}} {{image_data['label']}}.</p>
+		{% endfor %}
+	</div>
 {% endblock %}
