@@ -4,6 +4,8 @@ class IModel:
 	__metaclass__ = ABCMeta
 
 	"""
-	def's in model will be defined here.
+		Returns the labels detected
+		@params: photo is the image to look at
 	"""
-	
+	def labelImage(self,photo):
+		pass
