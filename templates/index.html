@@ -8,9 +8,8 @@
 			<br>
 			<input type="submit" name="submit" value="Submit">
 		</form>
-		{% for image_entity in image_entities %}
-			<img src="{{image_data['image_url']}}" width="200" height="200">
-			<p>You seem to {{image_data['feelings']}} {{image_data['label']}}.</p>
-		{% endfor %}
+			{% if image_data != null %}
+				<p>You seem to {{image_data.feelings}} {{image_data.label}}.</p>
+			{% endif %}
 	</div>
 {% endblock %}
