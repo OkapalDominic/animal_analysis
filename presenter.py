@@ -13,8 +13,8 @@ class Presenter:
 
     def analyze(self,data):
     	photo = data.files['file']
-    	labels = self.model.labelImage(photo)
-    	image_data = dict(label=labels[0],feelings="really like")
+    	(labels,uri) = self.model.labelImage(photo)
+    	image_data = dict(label=labels[0].description, feelings="really like", image=uri)
     	args = {'image_data':image_data}
     	route = Route(False, 'index.html', args)
     	return PresentView(route)

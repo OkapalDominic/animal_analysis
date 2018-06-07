@@ -9,7 +9,8 @@
 			<input type="submit" name="submit" value="Submit">
 		</form>
 			{% if image_data != null %}
-				<p>You seem to {{image_data.feelings}} {{image_data.label}}.</p>
+				<img height="50" width="50" src="{{image_data.image}}"/><br/>
+				<p>You seem to {{image_data.feelings}} {{image_data.label}}'s.</p>
 			{% endif %}
 	</div>
 {% endblock %}

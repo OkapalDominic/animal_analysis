@@ -12,7 +12,7 @@ class AppModel(IModel):
     """
 		Finds labels for the photo passed in
 		@params: photo is the image to check, use photo = request.files['file']
-		Returns an array of labels
+		Returns a tuple containing an array of labels and the uri to the image
     """
     def labelImage(self,photo):
     	# Create a Cloud Storage client
@@ -34,4 +34,5 @@ class AppModel(IModel):
     	response = client.label_detection(image=image)
     	labels = response.label_annotations
     	# Returns the labels detected in the image
-    	return labels
+    	return (labels,blob.public_url)
+
