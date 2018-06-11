@@ -2,6 +2,9 @@ from IModel import IModel
 from google.cloud import vision
 from google.cloud.vision import types
 from google.cloud import storage
+from google.cloud import language
+from google.cloud.language import enums
+from google.cloud.language import types
 import os
 
 class AppModel(IModel):
