@@ -5,7 +5,10 @@ from google.cloud import storage
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
+import six
 import os
+import sys
+
 
 class AppModel(IModel):
     def __init__(self,app):
@@ -38,4 +41,13 @@ class AppModel(IModel):
     	labels = response.label_annotations
     	# Returns the labels detected in the image
     	return (labels,blob.public_url)
-
+    
+    def sentiment_text(self, text):
+        client = language.LanguageServiceClient()
+        
+        if isinstance(text, six.binary_type):
+            text = text.decode('utf-8')
+        document = types.Document(content=text,type=enums.Document.Type.PLAIN_TEXT)
+        sentiment = client.analyze_sentiment(document).document_sentiment
+        feeling = sentiment.score
+        return (feeling)
