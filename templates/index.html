@@ -9,8 +9,16 @@
 			<input type="submit" name="submit" value="Submit">
 		</form>
 			{% if image_data != null %}
-				<img height="50" width="50" src="{{image_data.image}}"/><br/>
-				<p>You seem to {{image_data.feelings}} {{image_data.label}}s.</p>
+				{% if image_data.image != None %}
+					<img height="50" width="50" src="{{image_data.image}}"/><br/>
+				{% endif %}
+				{% if image_data.feelings != None and image_data.label != None %}
+					<p>You seem to {{image_data.feelings}} {{image_data.label}}s.</p>
+				{% elif image_data.label != None %}
+					<p>Please enter a description of how you feel about {{image_data.label}}s.</p>
+				{% else %}
+					<p>Please upload an image of an animal, and give me a description of how you feel about it.</p>
+				{% endif %}
 			{% endif %}
 	</div>
 {% endblock %}

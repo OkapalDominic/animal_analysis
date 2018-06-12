@@ -5,4 +5,4 @@ entrypoint: gunicorn -b :$PORT app:app
 runtime config:
     python_version: 3
 env_variables:
-    CLOUD_STORAGE_BUCKET: cs410c-selmon
+    CLOUD_STORAGE_BUCKET: cs410c-djo

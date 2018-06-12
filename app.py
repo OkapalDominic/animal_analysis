@@ -50,7 +50,10 @@ def index():
 
 @app.route('/analyze', methods=['GET','POST'])
 def analyze():
-    return render_view(presenter.analyze(request))
+	if request.method == 'POST':
+		return render_view(presenter.analyze(request))
+	else:
+		return render_template(presenter.index())
 
 
 if __name__ == '__main__':
