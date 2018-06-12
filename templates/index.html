@@ -10,7 +10,7 @@
 		</form>
 			{% if image_data != null %}
 				{% if image_data.image != None %}
-					<img height="50" width="50" src="{{image_data.image}}"/><br/>
+					<img height="250" src="{{image_data.image}}"/><br/>
 				{% endif %}
 				{% if image_data.feelings != None and image_data.label != None %}
 					<p>You seem to {{image_data.feelings}} {{image_data.label}}s.</p>
