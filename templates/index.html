@@ -1,13 +1,70 @@
 {% extends 'layout.html' %}
 {% block body %}
-	<div class="jumbotron text-center">
-		<h1>Welcome</h1>
-		<form action="analyze" method="POST" enctype="multipart/form-data">
-			Upload Photo: <input type="file" name="file">
-			Describe it: <input type="text" name="description">
-			<br>
-			<input type="submit" name="submit" value="Submit">
+<script >
+$(function() {
+
+  // We can attach the `fileselect` event to all file inputs on the page
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+  // We can watch for our custom `fileselect` event like this
+  $(document).ready( function() {
+      $(':file').on('fileselect', function(event, numFiles, label) {
+
+          var input = $(this).parents('.input-group').find(':text'),
+              log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+          if( input.length ) {
+              input.val(log);
+          } else {
+              if( log ) alert(log);
+          }
+
+      });
+  });
+  
+});
+</script>
+
+<div class="row">
+		<form class ="form-inline " action="analyze" method="POST" enctype="multipart/form-data">
+<div class="col-lg-6 col-sm-6 col-12">
+		<div class="input-group">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Browse&hellip; <input name="file" type="file" style="display: none;" multiple>
+                    </span>
+                </label>
+                <input type="text" class="form-control" readonly>
+                
+         </div>
+
+</div>
+
+<div class="col-lg-6 col-sm-6 col-12">
+         <div class="input-group">
+
+         		<label class="input-group-btn">
+                 
+         			Describe It: <br><input type="text" class="form-control" name="description">
+
+         		 </label>
+         </div>
+   </div>
+	<br><br><br>
+		<div class="col-lg-6 col-sm-6 col-12">
+		<div class="input-group">
+		 <input type="submit" name"submit" value="Submit">
+		 </div>
+		 </div>
 		</form>
+
+	</div>
+		
 			{% if image_data != null %}
 				{% if image_data.image != None %}
 					<img height="250" src="{{image_data.image}}"/><br/>
@@ -20,5 +77,6 @@
 					<p>Please upload an image of an animal, and give me a description of how you feel about it.</p>
 				{% endif %}
 			{% endif %}
-	</div>
+
 {% endblock %}
+
