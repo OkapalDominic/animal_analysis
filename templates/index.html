@@ -31,44 +31,42 @@ $(function() {
 </script>
 
 <div class="row">
-		<form class ="form-inline " action="analyze" method="POST" enctype="multipart/form-data">
-<div class="col-lg-6 col-sm-6 col-12">
-		<div class="input-group">
-                <label class="input-group-btn">
-                    <span class="btn btn-primary">
-                        Browse&hellip; <input name="file" type="file" style="display: none;" multiple>
+	<form class ="form-inline " action="analyze" method="POST" enctype="multipart/form-data">
+	
+		<div class="col-lg-6 col-sm-6 col-12">
+			<div class="input-group">
+            	<label class="input-group-btn">
+                	<span class="btn btn-primary">
+                    	Choose an Animal&hellip; <input type="file" id="file" name="file" class="inputfile">
                     </span>
                 </label>
-                <input type="text" class="form-control" readonly>
-                
-         </div>
-
-</div>
-
-<div class="col-lg-6 col-sm-6 col-12">
-         <div class="input-group">
-
-         		<label class="input-group-btn">
-                 
-         			Describe your feelings about it: <br><input type="text" class="form-control" name="description">
-
-         		 </label>
-         </div>
-   </div>
-	<br><br><br>
+            <input type="text" class="form-control" readonly>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 col-sm-6 col-12">
+        	<div class="input-group">
+        		<label class="input-group">
+                	Describe your feelings about it: <br><input type="text" class="form-control-text" name="description" id="description">
+         		</label>
+         	</div>
+   		</div>
+   		
+   		<br><br><br>
+		
 		<div class="col-lg-6 col-sm-6 col-12">
-		<div class="input-group">
-		 <input type="submit" class="btn btn-primary btn-lg" name"submit" value="Submit">
-
-		 </div>
-		 </div>
-		</form>
-
-	</div>
+			<div class="input-group">
+		 		<input type="submit" class="btn btn-primary btn-lg" name"submit" value="Submit">
+		 	</div>
+		</div>
+		
+	</form>
+	
+</div>
 		
 			{% if image_data != null %}
-				{% if image_data.image != None %}
-					<img height="250" src="{{image_data.image}}"/><br/>
+				{% if image_data.image != None and image_data.label != None %}
+					<img height="250" src="{{image_data.image}}" alt="{{image_data.label}}"/><br/>
 				{% endif %}
 				{% if image_data.feelings != None and image_data.label != None %}
 					<p>You seem to {{image_data.feelings}} {{image_data.label}}s.</p>
