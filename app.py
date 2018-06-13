@@ -10,6 +10,7 @@ app.secret_key = "secret"
 model = AppModel(app)
 presenter = Presenter(model)
 
+
 def create_template(route):
     """
     Takes in a route to redirect to or render a template for
@@ -34,6 +35,7 @@ def present_flash(msg):
     if not (msg == None):
         flash(msg)
 
+
 def render_view(view):
     """
     Flashes a message and renders a template for the given view 
@@ -48,13 +50,14 @@ def render_view(view):
 def index():
     return render_template(presenter.index())
 
-@app.route('/analyze', methods=['GET','POST'])
+
+@app.route('/analyze', methods=['GET', 'POST'])
 def analyze():
-	if request.method == 'POST':
-		return render_view(presenter.analyze(request))
-	else:
-		return render_template(presenter.index())
+    if request.method == 'POST':
+        return render_view(presenter.analyze(request))
+    else:
+        return render_template(presenter.index())
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=8080,debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
