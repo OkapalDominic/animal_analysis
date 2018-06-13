@@ -43,7 +43,12 @@ class AppModel(IModel):
     	labels = response.label_annotations
     	# Returns the labels detected in the image
     	return (labels,blob.public_url)
-    	
+
+    """
+        Sends query to google knowledge graph
+        @params: label is a string that is sent
+        Returns a description of the first search result obtained.
+    """
     def knowledgeGraph(self, label):
 		api_key = open('.api_key').read()
 		query = label
@@ -57,7 +62,12 @@ class AppModel(IModel):
 		url = service_url + '?' + urllib.urlencode(params)
 		response = json.loads(urllib.urlopen(url).read())
 		return response['itemListElement'][0]['result']['detailedDescription']['articleBody']
-		
+
+    """
+        Asks google language to analyze the sentiment
+        @params: text is the string to analyze
+        Returns a value from -1 to 1, which corresponds to how positive text is.
+    """
     def sentiment_text(self, text):
         client = language.LanguageServiceClient()
         

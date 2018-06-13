@@ -1,68 +1,24 @@
 {% extends 'layout.html' %}
 {% block body %}
-<script >
-$(function() {
-
-  // We can attach the `fileselect` event to all file inputs on the page
-  $(document).on('change', ':file', function() {
-    var input = $(this),
-        numFiles = input.get(0).files ? input.get(0).files.length : 1,
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-    input.trigger('fileselect', [numFiles, label]);
-  });
-
-  // We can watch for our custom `fileselect` event like this
-  $(document).ready( function() {
-      $(':file').on('fileselect', function(event, numFiles, label) {
-
-          var input = $(this).parents('.input-group').find(':text'),
-              log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-          if( input.length ) {
-              input.val(log);
-          } else {
-              if( log ) alert(log);
-          }
-
-      });
-  });
-  
-});
-</script>
-
-<div class="row">
-	<form class ="form-inline " action="analyze" method="POST" enctype="multipart/form-data">
-	
-		<div class="col-lg-6 col-sm-6 col-12">
-			<div class="input-group">
-            	<label class="input-group-btn">
-                	<span class="btn btn-primary">
-                    	Choose an Animal&hellip; <input type="file" id="file" name="file" class="inputfile">
-                    </span>
-                </label>
-            <input type="text" class="form-control" readonly>
-            </div>
-        </div>
-        
-        <div class="col-lg-6 col-sm-6 col-12">
-        	<div class="input-group">
-        		<label class="input-group">
-                	Describe your feelings about it: <br><input type="text" class="form-control-text" name="description" id="description">
-         		</label>
-         	</div>
-   		</div>
-   		
-   		<br><br><br>
-		
-		<div class="col-lg-6 col-sm-6 col-12">
-			<div class="input-group">
-		 		<input type="submit" class="btn btn-primary btn-lg" name"submit" value="Submit">
-		 	</div>
+<form action="analyze" method="POST" enctype="multipart/form-data">
+	<div class="form-group">
+		<div class="input-group mb-3">
+  			<div class="custom-file">
+    			<input type="file" class="custom-file-input" name="file" id="inputGroupFile01">
+    			<label id="filename" class="custom-file-label" for="inputGroupFile01">Select an image of an animal...</label>
+  			</div>
 		</div>
-		
-	</form>
+	</div>
 	
-</div>
+	<div class="form-group">
+		<label for="description">Description</label>
+		<textarea class="form-control" name="description" id="description" placeholder="How do you feel about this animal?"></textarea>
+	</div>
+	
+	<div class="form-group">
+		<input type="submit" class="btn btn-primary btn-lg" name="submit" value="Submit">
+	</div>
+</form>
 		
 			{% if image_data != null %}
 				{% if image_data.image != None and image_data.label != None %}
@@ -77,10 +33,30 @@ $(function() {
 				{% endif %}
 				
 				{% if image_data.detail != None %}
-					<p>Since you like {{image_data.label}}s, here's some more information about {{image_data.label}}s:</p>
+					<p>Since you like {{image_data.label}}s, here's some more information about them:</p>
 					<p>{{image_data.detail}}</p>
 				{% endif %}
 			{% endif %}
 
-{% endblock %}
+<script >
+$(function() {
 
+  // We can attach the `fileselect` event to all file inputs on the page
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+  // We can watch for our custom `fileselect` event like this
+  $(document).ready( function() {
+      $(':file').on('fileselect', function(event, numFiles, label) {
+              document.getElementById("filename").innerHTML = label;
+
+      });
+  });
+  
+});
+</script>
+{% endblock %}
