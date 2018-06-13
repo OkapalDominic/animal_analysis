@@ -19,9 +19,9 @@ class Presenter:
     	try:
     		photo = data.files['file']
     		(labels,uri) = self.model.labelImage(photo)
-    		labels = labels[0].description
+    		label = labels[0].description
     	except:
-    		labels = None
+    		label = None
     		uri = None
     	# Get sentiment from data.form['description'] and set feelings below to it.
     	description = data.form['description']
@@ -37,7 +37,12 @@ class Presenter:
 	    		feelings = "dislike"
 	    	else:
 	    		feelings = "really dislike"
-    	image_data = dict(label=labels, feelings=feelings, image=uri)
+	    # If both an image was uploaded and user at least likes it, get knoledge graph info
+		detail = None
+		if label != None and (feelings == "like" or feelings == "really like"):
+			detail = self.model.knowledgeGraph(label)
+	    
+    	image_data = dict(label=label, feelings=feelings, image=uri, detail=detail)
     	args = {'image_data':image_data}
     	route = Route(False, 'index.html', args)
     	return PresentView(route)

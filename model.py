@@ -8,6 +8,8 @@ from google.cloud.language import types
 import six
 import os
 import sys
+import json
+import urllib
 
 
 class AppModel(IModel):
@@ -41,7 +43,21 @@ class AppModel(IModel):
     	labels = response.label_annotations
     	# Returns the labels detected in the image
     	return (labels,blob.public_url)
-    
+    	
+    def knowledgeGraph(self, label):
+		api_key = open('.api_key').read()
+		query = label
+		service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
+		params = {
+			'query': query,
+			'limit': 1,
+			'indent': True,
+			'key': api_key,
+		}
+		url = service_url + '?' + urllib.urlencode(params)
+		response = json.loads(urllib.urlopen(url).read())
+		return response['itemListElement'][0]['result']['detailedDescription']['articleBody']
+		
     def sentiment_text(self, text):
         client = language.LanguageServiceClient()
         
@@ -51,3 +67,5 @@ class AppModel(IModel):
         sentiment = client.analyze_sentiment(document).document_sentiment
         feeling = sentiment.score
         return (feeling)
+	
+	

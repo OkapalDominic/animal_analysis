@@ -75,6 +75,11 @@ $(function() {
 				{% else %}
 					<p>Please upload an image of an animal, and give me a description of how you feel about it.</p>
 				{% endif %}
+				
+				{% if image_data.detail != None %}
+					<p>Since you like {{image_data.label}}s, here's some more information about {{image_data.label}}s:</p>
+					<p>{{image_data.detail}}</p>
+				{% endif %}
 			{% endif %}
 
 {% endblock %}
