@@ -49,9 +49,12 @@ class Presenter:
             detail = self.model.knowledgeGraph(label)
         else:
             detail = None
+        # translate label into Spanish
+        labeloutput = label+"s"
+        translatedText = self.model.translate_text("es",labeloutput)
         # Fill data into the Route
         image_data = dict(label=label, feelings=feelings,
-                          image=uri, detail=detail)
+                          image=uri, translatedText = translatedText,detail=detail)
         args = {'image_data': image_data}
         route = Route(False, 'index.html', args)
         return PresentView(route)

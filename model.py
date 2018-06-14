@@ -3,6 +3,7 @@ from google.cloud import vision
 from google.cloud.vision import types
 from google.cloud import storage
 from google.cloud import language
+from google.cloud import translate
 from google.cloud.language import enums
 from google.cloud.language import types
 import six
@@ -78,4 +79,20 @@ class AppModel(IModel):
         feeling = sentiment.score
         return (feeling)
 	
-	
+    """
+        Takes in a target language and a text to translate
+        using google.cloud translate API
+        
+        Returns the translated string in the target language
+	    
+    """
+    def translate_text(self, target, text):
+	    translate_client = translate.Client()
+	    
+	    if isinstance(text, six.binary_type):
+	        text = text.decode('utf-8')
+	    
+	    result = translate_client.translate(
+	        text, target_language=target)
+	    
+	    return result['translatedText']

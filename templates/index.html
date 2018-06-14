@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block body %}
 <form action="analyze" method="POST" enctype="multipart/form-data">
+	<br>File must be < 1 MB in size.<br>
 	<div class="form-group">
 		<div class="input-group mb-3">
   			<div class="custom-file">
@@ -25,7 +26,7 @@
 					<img height="250" src="{{image_data.image}}" alt="{{image_data.label}}"/><br/>
 				{% endif %}
 				{% if image_data.feelings != None and image_data.label != None %}
-					<p>You seem to {{image_data.feelings}} {{image_data.label}}s.</p>
+					<p>You seem to {{image_data.feelings}} {{image_data.label}}s (Spanish: {{image_data.translatedText}}).</p>
 				{% elif image_data.label != None %}
 					<p>Please enter a description of how you feel about {{image_data.label}}s.</p>
 				{% else %}
@@ -59,4 +60,5 @@ $(function() {
   
 });
 </script>
+
 {% endblock %}
