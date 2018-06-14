@@ -51,18 +51,18 @@ class AppModel(IModel):
         Returns a description of the first search result obtained.
     """
     def knowledgeGraph(self, label):
-		api_key = open('.api_key').read()
-		query = label
-		service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
-		params = {
-			'query': query,
-			'limit': 1,
-			'indent': True,
-			'key': api_key,
-		}
-		url = service_url + '?' + urllib.urlencode(params)
-		response = json.loads(urllib.urlopen(url).read())
-		return response['itemListElement'][0]['result']['detailedDescription']['articleBody']
+        api_key = open('.api_key').read()
+        query = label
+        service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
+        params = {
+                'query': query,
+                'limit': 1,
+                'indent': True,
+                'key': api_key,
+        }
+        url = service_url + '?' + urllib.urlencode(params)
+        response = json.loads(urllib.urlopen(url).read())
+        return response['itemListElement'][0]['result']['detailedDescription']['articleBody']
 
     """
         Asks google language to analyze the sentiment
