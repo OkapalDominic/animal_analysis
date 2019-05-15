@@ -10,7 +10,6 @@ app.secret_key = "secret"
 model = AppModel(app)
 presenter = Presenter(model)
 
-
 def create_template(route):
     """
     Takes in a route to redirect to or render a template for
@@ -60,4 +59,4 @@ def analyze():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(debug=True)

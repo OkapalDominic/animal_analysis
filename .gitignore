@@ -1,3 +1,7 @@
 *.pyc
-.gitignore
 env
+/.vscode
+/.api_key
+/cs410c-djo-6dfe9dc61c30.json
+/__pycache__
+/lib

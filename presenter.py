@@ -1,5 +1,8 @@
 from view_header import Route, PresentView
-
+from pathlib import Path
+import os
+import copy
+import uuid
 
 class Presenter:
 
@@ -10,6 +13,7 @@ class Presenter:
         Present index.html
 
     """
+
     def index(self):
 
         return 'index.html'
@@ -20,15 +24,23 @@ class Presenter:
         @params: data is the request from a POST of the form
         Returns a Route with data to fill in the page
     """
+
     def analyze(self, data):
         # Ask model for a description of the image
-        try:
-            photo = data.files['file']
-            (labels, uri) = self.model.labelImage(photo)
+        photo = data.files['file']
+        if photo.filename != '':
+            filename = str(uuid.uuid4()) + '-' + photo.filename
+            path = Path.cwd() / 'static' / filename
+            image = filename
+            path.touch()
+            path.write_bytes(photo.read())
+            photo.seek(0)
+            labels = self.model.labelImage(photo)
             label = labels[0].description
-        except:
+            photo.seek(0)
+        else:
             label = None
-            uri = None
+            image = None
         # Ask model for sentiment analysis on the description entered
         description = data.form['description']
         if description == '':
@@ -50,11 +62,20 @@ class Presenter:
         else:
             detail = None
         # translate label into Spanish
-        labeloutput = label+"s"
-        translatedText = self.model.translate_text("es",labeloutput)
+        if label == None:
+            labeloutput = ''
+        else:
+            labeloutput = label+"s"
+        translatedText = self.model.translate_text("es", labeloutput)
+
         # Fill data into the Route
-        image_data = dict(label=label, feelings=feelings,
-                          image=uri, translatedText = translatedText,detail=detail)
+        image_data = {
+            'label': label,
+            'feelings': feelings,
+            'image': image,
+            'translatedText': translatedText,
+            'detail': detail
+        }
         args = {'image_data': image_data}
         route = Route(False, 'index.html', args)
         return PresentView(route)
