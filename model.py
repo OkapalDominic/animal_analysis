@@ -46,7 +46,10 @@ class AppModel(IModel):
     """
 
     def knowledgeGraph(self, label):
-        api_key = open('.api_key').read()
+        try:
+            api_key = open('.api_key').read()
+        except IOError:
+            api_key = os.environ.get('API_KEY', None)
         query = label
         service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
         params = {
