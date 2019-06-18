@@ -19,6 +19,9 @@ import io
 class AppModel(IModel):
     def __init__(self, app):
         self.app = app
+        self.json_string = os.environ['GOOGLE_CREDENTIALS_JSON']
+        self.info = json.loads(self.json_string)
+        self.creds = service_account.Credentials.from_service_account_info(self.info)
 
     """
 		Finds labels for the photo passed in
@@ -27,11 +30,8 @@ class AppModel(IModel):
     """
 
     def labelImage(self, photo):
-        json_string = os.environ['GOOGLE_CREDENTIALS_JSON']
-        info = json.loads(json_string)
-        creds = service_account.Credentials.from_service_account_info(info)
         # Instantiates a client
-        client = vision.ImageAnnotatorClient(credentials=creds)
+        client = vision.ImageAnnotatorClient(credentials=self.creds)
         try:
             response = client.annotate_image({
                 'image': photo,
@@ -73,7 +73,7 @@ class AppModel(IModel):
     """
 
     def sentiment_text(self, text):
-        client = language.LanguageServiceClient()
+        client = language.LanguageServiceClient(credentials=self.creds)
 
         if isinstance(text, six.binary_type):
             text = text.decode('utf-8')
@@ -93,7 +93,7 @@ class AppModel(IModel):
     """
 
     def translate_text(self, target, text):
-        translate_client = translate.Client()
+        translate_client = translate.Client(credentials=self.creds)
 
         if isinstance(text, six.binary_type):
             text = text.decode('utf-8')
