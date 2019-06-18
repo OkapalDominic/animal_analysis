@@ -6,6 +6,7 @@ from google.cloud import language
 from google.cloud import translate
 from google.cloud.language import enums
 from google.cloud.language import types
+from google.oauth2 import service_account
 import six
 import os
 import sys
@@ -26,8 +27,11 @@ class AppModel(IModel):
     """
 
     def labelImage(self, photo):
+        json_string = os.environ['GOOGLE_CREDENTIALS_JSON']
+        info = json.loads(json_string)
+        creds = service_account.Credentials.from_service_account_info(info)
         # Instantiates a client
-        client = vision.ImageAnnotatorClient()
+        client = vision.ImageAnnotatorClient(credentials=creds)
         try:
             response = client.annotate_image({
                 'image': photo,
