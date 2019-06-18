@@ -1,9 +1,15 @@
+import os
+import json
+from google.oauth2 import service_account
 from flask import Flask, render_template, flash, redirect, url_for, request
 
 from model import AppModel
 from view_header import Route
 from presenter import Presenter
 
+json_string = os.environ['GOOGLE_CREDENTIALS_JSON']
+info = json.loads(json_string)
+creds = service_account.Credentials.from_service_account_info(info)
 
 app = Flask(__name__)
 app.secret_key = "secret"
